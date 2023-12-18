@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hustlein Clothing - Shop</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, ul, p, input, button {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Define a basic layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+        }
+
+        .brand-info {
+            flex: 1; /* Allow the brand info to grow and take available space */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align the brand info to the left */
+            margin-right: 20px; /* Add some spacing to the right of the brand info */
+        }
+
+        .brand-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 5px;
+            width: 50%;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 5px; /* Add margin to separate input and button */
+        }
+
+        .search-bar button {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        nav ul {
+            list-style: none;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 10px;
+            z-index: 1;
+            top: 100%;
+            left: 0;
+        }
+
+        .dropdown ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dropdown li {
+            margin-bottom: 10px;
+        }
+
+        .dropdown a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        /* Show the dropdown on hover */
+        nav ul li:hover .dropdown {
+            display: block;
+        }
+
+        /* Shop-specific styles */
+        main {
+            padding: 20px;
+        }
+
+        .product-display {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .product-item {
+            flex: 0 1 calc(33.33% - 20px);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-item h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .product-item p {
+            font-size: 0.9rem;
+            color: #777;
+            margin: 10px 0;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .buy-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .buy-button:hover {
+            background-color: #555;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 10px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin-bottom: 10px;
+            }
+
+            .product-item {
+                flex: 0 1 calc(50% - 20px);
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Change to column layout */
+            align-items: center; /* Center align items horizontally */
+        }
+
+        .footer-nav,
+        .subscription {
+            margin-bottom: 20px; /* Add some space between the two sections */
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            text-align: center; /* Align the navigation to the center */
+            padding-left: 0; /* Remove default padding */
+        }
+
+        .footer-nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .footer-nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Newsletter Styles */
+        .subscription {
+            flex-grow: 1; /* Allow the newsletter to grow and take available space */
+            text-align: right; /* Align the newsletter to the right */
+        }
+
+        /* Adjust the form input and button styles as needed */
+        #newsletter-form {
+            display: flex;
+            flex-direction: column; /* Stack form elements vertically */
+            align-items: center; /* Center-align form elements horizontally */
+        }
+
+        #email-input {
+            padding: 5px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        #subscribe-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #subscribe-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand-info">
+            <h1 class="brand-title">Hustlein Clothing</h1>
+            <p class="tagline">Hustle Over Luck</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li>
+                    <a href="purchase.html">Shop</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Men</a></li>
+                            <li><a href="#">Woman</a></li>
+                            <!-- Add more dropdown items as needed -->
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="blog.html">Blog</a></li> <!-- Link to the blog page -->
+                <li>
+                    <a href="contact.html">Contact Us</a> <!-- Link to the contact page -->
+                </li>
+                <li><a href="tracking.html">Track Order</a></li>
+            </ul>
+        </nav>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search..." class="small-search-input">
+            <a href="blog.html"> <!-- Link to the blog page -->
+                <button type="button" class="small-search-button">Blog</button>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Product Display Section -->
+        <section class="product-display">
+            <!-- Product 1 -->
+            <div class="product-item">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Hustlein Classic Hustle Over Luck Oversized T-Shirt Batch-2</h3>
+                <p>A Classic Hustle Over Luck T-Shirt</p>
+                <span class="price">₹599</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-item">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Hustlein Indian Superhero Oversized T-Shirt Batch-2</h3>
+                <p>Indian Superhero T-Shirt Inspired By Lord Hanuman Ji</p>
+                <span class="price">₹599</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-item">
+                <img src="product3.jpg" alt="Product 3">
+                <h3>Hustlein Lifting Wing Oversized T-Shirt Batch-2</h3>
+                <p>Inspired By A Gorilla's Raw Strength</p>
+                <span class="price">₹599</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-item">
+                <img src="product4.jpg" alt="Product 4">
+                <h3>Hustlein Oversized T-Shirt White Touch Batch-1</h3>
+                <p>The Original Hustlein T-Shirt</p>
+                <span class="price">₹599</span>
+                <button class="buy-button">Buy Now</button>
+            </div>
+
+            <!-- Add more product items as needed -->
+        </section>
+    </main>
+    <footer>
+        <div class="footer-nav">
+            <h2>Index of Pages</h2>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="purchase.html">Purchase</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="contactus.html">Contact</a></li>
+                <li><a href="tracking.html">Tracking</a></li>
+            </ul>
+        </div>
+        <div class="subscription">
+            <h2>Subscribe to our Newsletter</h2>
+            <p>Stay updated with the latest news and offers.</p>
+            <form id="newsletter-form">
+                <input type="email" id="email-input" placeholder="Your Email" required>
+                <button type="submit" id="subscribe-button">Subscribe</button>
+            </form>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for header dropdown menus
+        const navItems = document.querySelectorAll('nav ul li');
+
+        navItems.forEach(item => {
+            item.addEventListener('mouseover', () => {
+                const dropdown = item.querySelector('.dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'block';
+                }
+            });
+
+            item.addEventListener('mouseout', () => {
+                const dropdown = item.querySelector('.dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+
+        // JavaScript for newsletter subscription form
+        const newsletterForm = document.getElementById('newsletter-form');
+        const emailInput = document.getElementById('email-input');
+        const subscribeButton = document.getElementById('subscribe-button');
+
+        newsletterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = emailInput.value.trim();
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            alert('Subscribed successfully!');
+            newsletterForm.reset();
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
